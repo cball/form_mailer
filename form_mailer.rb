@@ -1,38 +1,39 @@
 require 'sinatra'
 require 'pony'
 
-set :protection, :origin_whitelist => allowed_domains
+set :protection, :origin_whitelist => Proc.new {allowed_domains}
 
 get '/' do
   halt 401, 'sorry.'
 end
 
 post '/mail' do
-  if valid_domain?
+  if allowed_domain?
     send_email
-  end
-
-  if !params[:redirect_to].nil?
-    redirect params[:redirect_to]
+    redirect_to_specified_or_back
   else
-    redirect back
+    return redirect back
   end
 end
-
-private
 
 def allowed_domains
   ENV['FORM_MAILER_ALLOWED_DOMAINS'].to_s.split(',')
 end
 
-def valid_domain?
-  ENV['FORM_MAILER_ALLOWED_DOMAINS'].include? request.referrer
+private
+
+def allowed_domain?
+  allowed_domains.include? host_for(request.referrer)
+end
+
+def host_for(uri)
+  URI(uri).host
 end
 
 def send_email
   Pony.mail(
     to: ENV['FORM_MAILER_TO'],
-    from: from_email,
+    from: from,
     subject: subject,
     via: :smtp,
     body: message,
@@ -45,14 +46,34 @@ def send_email
   )
 end
 
+def redirect_to_specified_or_back
+  if !params[:redirect_to].nil? && redirect_to_is_allowed_domain?
+    redirect params[:redirect_to]
+  else
+    redirect back
+  end
+end
+
+def redirect_to_is_allowed_domain?
+  allowed_domains.include? host_for(params[:redirect_to])
+end
+
 def subject
   params[:subject] || "Here's an email!"
 end
 
+def from
+  "#{from_name} <#{from_email}>"
+end
+
 def from_email
-  params[:email] || 'noclue@person.net'
+  params[:email] || "noclue@person.net"
+end
+
+def from_name
+  params[:name] || "Unknown"
 end
 
 def message
-  params[:message] || 'No content'
+  params[:message] || "No content"
 end
