@@ -13,20 +13,23 @@ git clone git@github.com:cball/form_mailer.git
 heroku apps:create cool-mailer-app
 ```
 
-## Add an smtp addon (I use mandrill)
+### Add an smtp addon (I use mandrill)
+```bash
 heroku addons:add mandrill
+```
 
-## Configure
+### Configure
 
 The following ENV variables should be set on on heroku:
-FORM_MAILER_ALLOWED_DOMAINS
-FORM_MAILER_TO
-SMTP_ADDRESS
-SMTP_PASSWORD
-SMTP_PORT
+
+FORM_MAILER_ALLOWED_DOMAINS   
+FORM_MAILER_TO  
+SMTP_ADDRESS  
+SMTP_PASSWORD  
+SMTP_PORT  
 SMTP_USERNAME
 
-FORM_MAILER_ALLOWED_DOMAINS is a comma separated list of domains you want to allow to post to the app
+FORM_MAILER_ALLOWED_DOMAINS is a comma separated list of domains you want to allow to post to the app.  
 FORM_MAILER_TO is the email address or list of email addresses you'd like to send messages to
 
 ```bash
@@ -39,7 +42,7 @@ heroku config:set FORM_MAILER_ALLOWED_DOMAINS=mysite.com FORM_MAILER_TO=myemail@
 git push heroku
 ```
 
-## Create a contact form
+### Create a contact form
 Point your email form on mysite.com to post to cool-mailer-app.heroku.com/mail with any combination of the following info:
   
 ```html
