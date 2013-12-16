@@ -7,6 +7,10 @@ get '/' do
   halt 401, 'sorry.'
 end
 
+get '/healthcheck' do
+  'ok'
+end
+
 post '/mail' do
   if allowed_domain?
     send_email
