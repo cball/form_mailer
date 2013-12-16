@@ -30,11 +30,13 @@ SMTP_PORT
 SMTP_USERNAME
 
 FORM_MAILER_ALLOWED_DOMAINS is a comma separated list of domains you want to allow to post to the app.  
-FORM_MAILER_TO is the email address or list of email addresses you'd like to send messages to
+FORM_MAILER_TO is the email address or list of email addresses you'd like to send messages to.
 
 ```bash
 heroku config:set FORM_MAILER_ALLOWED_DOMAINS=mysite.com FORM_MAILER_TO=myemail@mysite.com SMTP_ADDRESS=smtp.mandrillapp.com SMTP_USERNAME=(username from MANDRILL_USERNAME) SMTP_PASSWORD=(password from MANDRILL_APIKEY) SMTP_PORT=587
 ```
+
+Any SMTP setup should work, just adjust the ENV variables.
 
 ### Push it up
 
