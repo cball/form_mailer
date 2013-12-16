@@ -54,3 +54,5 @@ Point your email form on mysite.com to post to cool-mailer-app.heroku.com/mail w
 <input type="email" name="email" />
 <textarea name="message"></textarea>
 ```
+
+Note: The domain in the value of redirect_to must also be set in the FORM_MAILER_ALLOWED_DOMAINS ENV variable.
