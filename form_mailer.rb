@@ -79,5 +79,14 @@ def from_name
 end
 
 def message
-  params[:message] || "No content"
+  params[:message] || param_list
+end
+
+def param_list
+  text = ''
+  params.reject{|k,v| %w(redirect_to).include? k.to_s}.each do |k,v|
+    text << "#{k}: #{v}\n"
+  end
+
+  text
 end
