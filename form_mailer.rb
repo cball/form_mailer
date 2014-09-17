@@ -84,9 +84,13 @@ end
 
 def param_list
   text = ''
-  params.reject{|k,v| %w(redirect_to).include? k.to_s}.each do |k,v|
+  params_without_redirect.each do |k,v|
     text << "#{k}: #{v}\n"
   end
 
   text
+end
+
+def params_without_redirect
+  params.reject{|k,v| %w(redirect_to).include? k.to_s}
 end
