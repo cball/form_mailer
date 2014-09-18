@@ -27,10 +27,13 @@ end
 private
 
 def allowed_domain?
-  allowed_domains.include? host_for(request.referrer)
+  # referrer is blank if going from https -> http
+  allowed_domains.include? host_for(request.referrer) || (request.referrer.blank? && redirect_to_is_allowed_domain?)
 end
 
 def host_for(uri)
+  return nil if uri.blank?
+
   URI(uri).host
 end
 
