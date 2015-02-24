@@ -14,7 +14,8 @@ end
 post '/mail' do
   if allowed_domain?
     send_email
-    redirect_to_specified_or_back
+    halt 200
+    # redirect_to_specified_or_back
   else
     return redirect back
   end
