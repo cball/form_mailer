@@ -14,9 +14,13 @@ end
 post '/mail' do
   if allowed_domain?
     send_email
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    halt 200
-    # redirect_to_specified_or_back
+
+    if request.xhr?
+      response.headers['Access-Control-Allow-Origin'] = '*'
+      halt 200
+    else
+      redirect_to_specified_or_back
+    end
   else
     return redirect back
   end
