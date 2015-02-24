@@ -14,6 +14,7 @@ end
 post '/mail' do
   if allowed_domain?
     send_email
+    response.headers['Access-Control-Allow-Origin'] = '*'
     halt 200
     # redirect_to_specified_or_back
   else
