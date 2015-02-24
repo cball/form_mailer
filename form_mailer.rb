@@ -15,7 +15,7 @@ post '/mail' do
   if allowed_domain?
     send_email
 
-    if request.xhr?
+    if params[:redirect_to] == 'xhr'# request.xhr? fails for some reason
       response.headers['Access-Control-Allow-Origin'] = '*'
       halt 200
     else
