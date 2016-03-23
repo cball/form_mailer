@@ -54,7 +54,7 @@ def send_email
       address: ENV['SMTP_ADDRESS'],
       port: ENV['SMTP_PORT'],
       user_name: ENV['SMTP_USERNAME'],
-      password: ENV['MANDRILL_APIKEY']
+      password: ENV['SMTP_PASSWORD']
     }
   )
 end
@@ -76,15 +76,7 @@ def subject
 end
 
 def from
-  "#{from_name} <#{from_email}>"
-end
-
-def from_email
-  params[:email] || "noclue@person.net"
-end
-
-def from_name
-  params[:name] || "Unknown"
+  "echobind <info@echobind.com"
 end
 
 def message
