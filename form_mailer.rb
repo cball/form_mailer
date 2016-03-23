@@ -14,7 +14,13 @@ end
 post '/mail' do
   if allowed_domain?
     send_email
-    redirect_to_specified_or_back
+
+    if params[:redirect_to] == 'xhr'# request.xhr? fails for some reason
+      response.headers['Access-Control-Allow-Origin'] = '*'
+      halt 200
+    else
+      redirect_to_specified_or_back
+    end
   else
     return redirect back
   end
